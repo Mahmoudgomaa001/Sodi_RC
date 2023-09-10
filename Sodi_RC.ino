@@ -196,8 +196,8 @@ void avoidance() {
 #define Right_Trun_Upper 55
 #define Right_Trun_Lower 45
 
-#define Left_Limit_Upper 60
-#define Left_Limit_Lower 50
+#define Right_Limit_Upper 50
+#define Right_Limit_Lower 40
 
 
 
@@ -241,14 +241,14 @@ void avoidance2() {
     // Backward();
     // delay(450);
 
-    if (LeftSensor >= Left_Limit_Upper) {
-      Left();
-      Serial.println("First If Left :");
+    if (RightSensor >= Right_Limit_Upper) {
+      Right();
+      Serial.println("First If Right :");
       // delay(300);
 
-    } else if (LeftSensor < Left_Limit_Lower) {
-      Serial.println("First If Right :");
-      Right();
+    } else if (RightSensor < Right_Limit_Lower) {
+      Serial.println("First If Left :");
+      Left();
       // delay(300);
     } else {
 
@@ -256,12 +256,13 @@ void avoidance2() {
       Serial.println("First If Forward :");
     }
 
-  } else if (FrontSensor < Front_Limit) {
-    while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
-      Serial.println("Second If  Trun Left :");
-      Left();
-    }
   }
+  //  else if (FrontSensor < Front_Limit) {
+  //   while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
+  //     Serial.println("Second If  Trun Left :");
+  //     Left();
+  //   }
+  // }
 
   else {
     Serial.println("First If Stop :");
