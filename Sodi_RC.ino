@@ -81,7 +81,7 @@ void loop() {
   // avoidance2();
   Forward();
   delay(3000);
-  
+  //a7la msa
   if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
   else if (!huskylens.isLearned()) Serial.println(F("Nothing learned, press learn button on HUSKYLENS to learn one!"));
   else if (!huskylens.available()) {
