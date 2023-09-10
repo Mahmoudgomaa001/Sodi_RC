@@ -211,23 +211,23 @@ void avoidance2() {
 
 
   SonarSensor(Trig_Front, Echo_Front);
-  if (distance < 255) {
-    FrontSensor = distance;
-  }
-
+  // if (distance < 255) {
+  //   FrontSensor = distance;
+  // }
+  FrontSensor = distance;
 
   SonarSensor(Trig_Left, Echo_Left);
-  if (distance < 255) {
+  // if (distance < 255) {
 
-    LeftSensor = distance;
-  }
-
+  //   LeftSensor = distance;
+  // }
+  LeftSensor = distance;
 
   SonarSensor(Trig_Right, Echo_Right);
-  if (distance < 255) {
-    RightSensor = distance;
-  }
-
+  // if (distance < 255) {
+  //   RightSensor = distance;
+  // }
+  RightSensor = distance;
 
   Serial.print("Front Sensor: ");
   Serial.println(FrontSensor);
@@ -315,7 +315,6 @@ void SonarSensor(int trigPin, int echoPin) {
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = duration / 58.2;
- 
 }
 
 void Forward() {
