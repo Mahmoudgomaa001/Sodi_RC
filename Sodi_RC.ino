@@ -200,10 +200,10 @@ void avoidance() {
 //avoidance2
 void avoidance2() {
 
-  if (stopp == 1) {
-    Stop();
-    return;
-  }
+  // if (stopp == 1) {
+  //   Stop();
+  //   return;
+  // }
   SonarSensor(Trig_Front, Echo_Front);
   FrontSensor = distance;
 
