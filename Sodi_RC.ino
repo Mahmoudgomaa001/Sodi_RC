@@ -224,8 +224,10 @@ void avoidance2() {
 
     // Backward();
     // delay(450);
-    Forward();
-    Serial.println("First If Forward :");
+
+
+
+
     if (LeftSensor >= Left_Limit_Upper) {
       Left();
       Serial.println("First If Left :");
@@ -235,9 +237,15 @@ void avoidance2() {
       Serial.println("First If Right :");
       Right();
       // delay(300);
+    } else {
+      Forward(LeftSensor <= Left_Limit_Upper);
+      Serial.println("First If Forward :");
     }
 
-  } else {
+  }
+
+
+  else {
     Serial.println("First If Stop :");
     Stop();
   }
