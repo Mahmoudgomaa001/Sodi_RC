@@ -225,16 +225,20 @@ void avoidance2() {
     // Backward();
     // delay(450);
     Forward();
+    Serial.println("First If Forward :");
     if (LeftSensor >= Left_Limit_Upper) {
       Left();
+      Serial.println("First If Left :");
       // delay(300);
 
     } else if (LeftSensor < Left_Limit_Lower) {
+      Serial.println("First If Right :");
       Right();
       // delay(300);
     }
 
   } else {
+    Serial.println("First If Stop :");
     Stop();
   }
   // } else if (RightSensor <= 30 || (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
