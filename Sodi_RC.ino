@@ -239,7 +239,7 @@ void avoidance2() {
       // delay(300);
     } else {
 
-      Backward();
+      Forward();
       Serial.println("First If Forward :");
     }
 
