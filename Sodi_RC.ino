@@ -192,6 +192,10 @@ void avoidance() {
   delay(5);
 }
 #define Front_Limit 90
+#define Front_Trun 190
+#define Right_Trun_Upper 55
+#define Right_Trun_Lower 45
+
 #define Left_Limit_Upper 60
 #define Left_Limit_Lower 50
 
@@ -204,14 +208,26 @@ void avoidance2() {
   //   Stop();
   //   return;
   // }
+
+
   SonarSensor(Trig_Front, Echo_Front);
-  FrontSensor = distance;
+  if (distance < 255) {
+    FrontSensor = distance;
+  }
+
 
   SonarSensor(Trig_Left, Echo_Left);
-  LeftSensor = distance;
+  if (distance < 255) {
+
+    LeftSensor = distance;
+  }
+
 
   SonarSensor(Trig_Right, Echo_Right);
-  RightSensor = distance;
+  if (distance < 255) {
+    RightSensor = distance;
+  }
+
 
   Serial.print("Front Sensor: ");
   Serial.println(FrontSensor);
@@ -224,9 +240,6 @@ void avoidance2() {
 
     // Backward();
     // delay(450);
-
-
-
 
     if (LeftSensor >= Left_Limit_Upper) {
       Left();
@@ -250,6 +263,14 @@ void avoidance2() {
     Serial.println("First If Stop :");
     Stop();
   }
+  if (FrontSensor > Front_Limit) {
+    while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
+      Serial.println("Second If  Trun Left :");
+      Left();
+    }
+  }
+
+
   // } else if (RightSensor <= 30 || (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
   //   if ((currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
   //     Serial.print("Gomaa Hack Red-Left: ");
@@ -295,6 +316,7 @@ void SonarSensor(int trigPin, int echoPin) {
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = duration / 58.2;
+  if distance
 }
 
 void Forward() {
