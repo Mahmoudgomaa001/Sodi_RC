@@ -77,8 +77,8 @@ void setup() {
 void loop() {
 
   delay(10);
-  avoidance();
-
+  // avoidance();
+  avoidance2();
   if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
   else if (!huskylens.isLearned()) Serial.println(F("Nothing learned, press learn button on HUSKYLENS to learn one!"));
   else if (!huskylens.available()) {
@@ -145,7 +145,7 @@ void avoidance() {
   Serial.println(RightSensor);
   Serial.print("Left Sensor: ");
   Serial.println(LeftSensor);
-  if (FrontSensor <= 30 ) {
+  if (FrontSensor <= 30) {
 
     Backward();
     delay(450);
@@ -169,8 +169,7 @@ void avoidance() {
     Left();
     delay(300);
 
-  }
-  else if (LeftSensor <= 30  || (currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
+  } else if (LeftSensor <= 30 || (currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
     if ((currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
       Serial.print("Gomaa Hack Green-Right: ");
       Serial.print("currentColorID: ");
@@ -188,10 +187,92 @@ void avoidance() {
   } else {
     Forward();
     delay(300);
-  } 
+  }
 
   delay(5);
 }
+#define Front_Limit 90
+#define Left_Limit_Upper 60
+#define Left_Limit_Lower 50
+
+
+
+//avoidance2
+void avoidance2() {
+
+  if (stopp == 1) {
+    Stop();
+    return;
+  }
+  SonarSensor(Trig_Front, Echo_Front);
+  FrontSensor = distance;
+
+  SonarSensor(Trig_Left, Echo_Left);
+  LeftSensor = distance;
+
+  SonarSensor(Trig_Right, Echo_Right);
+  RightSensor = distance;
+
+  Serial.print("Front Sensor: ");
+  Serial.println(FrontSensor);
+  Serial.print("Right Sensor: ");
+  Serial.println(RightSensor);
+  Serial.print("Left Sensor: ");
+  Serial.println(LeftSensor);
+
+  if (FrontSensor >= Front_Limit) {
+
+    // Backward();
+    // delay(450);
+    Forward();
+    if (LeftSensor >= Left_Limit_Upper) {
+      Left();
+      // delay(300);
+
+    } else if (LeftSensor < Left_Limit_Lower) {
+      Right();
+      // delay(300);
+    }
+
+  } else {
+    Stop();
+  }
+  // } else if (RightSensor <= 30 || (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
+  //   if ((currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
+  //     Serial.print("Gomaa Hack Red-Left: ");
+  //     Serial.print("currentColorID: ");
+  //     Serial.print(currentColorID);
+  //     Serial.print(", currentBlockWidth : ");
+  //     Serial.println(currentBlockWidth);
+  //     resetBlockTurning();
+  //   }
+  //   Left();
+  //   delay(300);
+
+  // }
+  // else if (LeftSensor <= 30  || (currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
+  //   if ((currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
+  //     Serial.print("Gomaa Hack Green-Right: ");
+  //     Serial.print("currentColorID: ");
+  //     Serial.print(currentColorID);
+  //     Serial.print(", currentBlockWidth : ");
+  //     Serial.println(currentBlockWidth);
+  //     resetBlockTurning();
+  //   }
+  //   Right();
+  //   delay(300);
+
+  // } else if (RightSensor >= 35) {
+  //   Right();
+  //   delay(300);
+  // } else {
+  //   Forward();
+  //   delay(300);
+  // }
+
+  // delay(5);
+}  //avoidness2
+
 
 void SonarSensor(int trigPin, int echoPin) {
   digitalWrite(trigPin, LOW);
