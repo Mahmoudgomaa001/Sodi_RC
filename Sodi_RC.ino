@@ -256,19 +256,18 @@ void avoidance2() {
       Serial.println("First If Forward :");
     }
 
-  }
-
-
-  else {
-    Serial.println("First If Stop :");
-    Stop();
-  }
-  if (FrontSensor > Front_Limit) {
+  } else if (FrontSensor > Front_Limit) {
     while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
       Serial.println("Second If  Trun Left :");
       Left();
     }
   }
+
+  else {
+    Serial.println("First If Stop :");
+    Stop();
+  }
+
 
 
   // } else if (RightSensor <= 30 || (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
@@ -316,7 +315,7 @@ void SonarSensor(int trigPin, int echoPin) {
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = duration / 58.2;
-  if distance
+ 
 }
 
 void Forward() {
