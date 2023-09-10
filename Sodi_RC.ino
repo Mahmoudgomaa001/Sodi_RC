@@ -256,7 +256,7 @@ void avoidance2() {
       Serial.println("First If Forward :");
     }
 
-  } else if (FrontSensor > Front_Limit) {
+  } else if (FrontSensor <>> Front_Limit) {
     while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
       Serial.println("Second If  Trun Left :");
       Left();
