@@ -78,9 +78,9 @@ void loop() {
 
   delay(10);
   // avoidance();
-  // avoidance2();
-  Forward();
-  delay(3000);
+  avoidance2();
+  // Forward();
+  // delay(3000);
   //a7la msa
   if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
   else if (!huskylens.isLearned()) Serial.println(F("Nothing learned, press learn button on HUSKYLENS to learn one!"));
@@ -194,6 +194,9 @@ void avoidance() {
 
   delay(5);
 }
+
+///// الليمت يسطا
+
 #define Front_Limit 90
 #define Front_Trun 190
 #define Right_Trun_Upper 55
@@ -260,6 +263,8 @@ void avoidance2() {
     }
 
   }
+  ///////////// الدوران يسطا
+
   //  else if (FrontSensor < Front_Limit) {
   //   while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
   //     Serial.println("Second If  Trun Left :");
@@ -267,6 +272,8 @@ void avoidance2() {
   //   }
   // }
 
+
+////////////
   else {
     Serial.println("First If Stop :");
     Stop();
