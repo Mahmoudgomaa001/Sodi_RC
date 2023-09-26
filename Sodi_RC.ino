@@ -265,13 +265,13 @@ void avoidance2() {
   }
   ///////////// الدوران يسطا
 
-  else if (FrontSensor < Front_Limit && FrontSensor > 70) {
+  else if (FrontSensor < Front_Limit && FrontSensor > 60) {
     // Serial.println("Second If ");
     //  && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Lower
 
     Serial.println("Second If  Trun Left :");
     Left();
-    delay(300);
+    // delay(300);
 
   }
 
