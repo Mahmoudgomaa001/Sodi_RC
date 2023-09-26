@@ -265,15 +265,25 @@ void avoidance2() {
   }
   ///////////// الدوران يسطا
 
-  //  else if (FrontSensor < Front_Limit) {
-  //   while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
-  //     Serial.println("Second If  Trun Left :");
-  //     Left();
-  //   }
-  // }
+  else if (FrontSensor < Front_Limit) {
+    while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Upper) {
+      SonarSensor(Trig_Front, Echo_Front);
+      FrontSensor = distance;
+
+      SonarSensor(Trig_Left, Echo_Left);
+      LeftSensor = distance;
+
+      SonarSensor(Trig_Right, Echo_Right);
+      RightSensor = distance;
+      
+
+      Serial.println("Second If  Trun Left :");
+      Left();
+    }
+  }
 
 
-////////////
+  ////////////
   else {
     Serial.println("First If Stop :");
     Stop();
