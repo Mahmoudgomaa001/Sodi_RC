@@ -267,8 +267,8 @@ void avoidance2() {
 
   else if (FrontSensor < Front_Limit) {
     Serial.println("Second If ");
-
-    while (FrontSensor < 190 && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Lower) {
+    //  && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Lower
+    while (FrontSensor < 190) {
       SonarSensor(Trig_Front, Echo_Front);
       FrontSensor = distance;
 
