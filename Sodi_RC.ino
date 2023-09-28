@@ -318,7 +318,11 @@ void avoidance2() {
 
   }
 
+  else if (currentColorID == Red_Color_ID && FrontSensor < 30) {
+    Serial.println("RED BLOCK FORWARD");
+    Forward();
 
+  }
 
   ////////////
   else {
