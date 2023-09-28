@@ -324,14 +324,16 @@ void avoidance2() {
     Serial.println("RED BLOCK FORWARD");
     Right();
 
-  }
+  } else if (FrontSensor < 10) {
+    Serial.println("RED BLOCK FORWARD");
+    Left();
 
+  }
   ////////////
   else {
-
-    Serial.println("Else stop ");
-    // Serial.println("First If Stop :");
-    // Stop();
+    // Serial.println("Else stop ");
+    // // Serial.println("First If Stop :");
+    // // Stop();
     Forward();
     // delay(450);
 
