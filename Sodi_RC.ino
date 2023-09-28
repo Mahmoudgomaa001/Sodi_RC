@@ -306,7 +306,7 @@ void avoidance2() {
       Serial.print(", currentBlockWidth : ");
       Serial.println(currentBlockWidth);
       resetBlockTurning();
-      Left();
+      Right();
     }
 
     // Serial.println("Second If ");
