@@ -298,30 +298,31 @@ void avoidance2() {
     Left();
     // delay(300);
 
-  } else if (FrontSensor < 50 && FrontSensor > 30) {
-    if (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold)) {
-      Serial.print("Gomaa Hack Red-Left: ");
-      Serial.print("currentColorID: ");
-      Serial.print(currentColorID);
-      Serial.print(", currentBlockWidth : ");
-      Serial.println(currentBlockWidth);
-      resetBlockTurning();
-      Right();
-      delay(200);
-    }
-
-    // Serial.println("Second If ");
-    //  && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Lower
-
-    Serial.println("Second If  Trun Left :");
-    Left();
-    // delay(300);
-
   }
+  // else if (FrontSensor < 50 && FrontSensor > 30) {
+  //   if (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold)) {
+  //     Serial.print("Gomaa Hack Red-Left: ");
+  //     Serial.print("currentColorID: ");
+  //     Serial.print(currentColorID);
+  //     Serial.print(", currentBlockWidth : ");
+  //     Serial.println(currentBlockWidth);
+  //     resetBlockTurning();
+  //     Right();
+  //     delay(200);
+  //   }
 
-  else if (currentColorID == Red_Color_ID && FrontSensor < 30) {
+  //   // Serial.println("Second If ");
+  //   //  && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Lower
+
+  //   Serial.println("Second If  Trun Left :");
+  //   Left();
+  //   // delay(300);
+
+  // }
+
+  else if (currentColorID == Red_Color_ID && FrontSensor < 20) {
     Serial.println("RED BLOCK FORWARD");
-    Forward();
+    Right();
 
   }
 
