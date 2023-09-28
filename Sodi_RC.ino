@@ -332,7 +332,7 @@ void avoidance2() {
     Serial.println("Else stop ");
     // Serial.println("First If Stop :");
     // Stop();
-    Right();
+    Left();
   }
 
 
