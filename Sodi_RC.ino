@@ -259,6 +259,7 @@ void avoidance2() {
     } else {
 
       Forward();
+      delay(100);
       Serial.println("First If Forward :");
     }
     // Serial.println("First If ");
