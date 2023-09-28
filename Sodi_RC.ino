@@ -332,8 +332,8 @@ void avoidance2() {
     Serial.println("Else stop ");
     // Serial.println("First If Stop :");
     // Stop();
-    Backward();
-    delay(450);
+    Forward();
+    // delay(450);
 
     // Left
   }
