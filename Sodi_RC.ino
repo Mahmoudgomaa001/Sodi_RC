@@ -319,8 +319,11 @@ void avoidance2() {
   //   // delay(300);
 
   // }
+  else if (currentColorID == Red_Color_ID && FrontSensor > 25) {
+    Forward();
 
-  else if (currentColorID == Red_Color_ID && FrontSensor < 25) {
+
+  } else if (currentColorID == Red_Color_ID && FrontSensor <= 25) {
     Serial.println("RED BLOCK FORWARD");
     Right();
 
