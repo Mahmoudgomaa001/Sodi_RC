@@ -287,9 +287,28 @@ void avoidance2() {
     }
     // Serial.println("First If ");
   }
-  ///////////// الدوران يسطا
 
+  ///////////// الدوران يسطا
   else if (FrontSensor < Front_Limit && FrontSensor > 50) {
+
+    // Serial.println("Second If ");
+    //  && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Lower
+
+    Serial.println("Second If  Trun Left :");
+    Left();
+    // delay(300);
+
+  } else if (FrontSensor < 50 && FrontSensor > 30) {
+    if (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold)) {
+      Serial.print("Gomaa Hack Red-Left: ");
+      Serial.print("currentColorID: ");
+      Serial.print(currentColorID);
+      Serial.print(", currentBlockWidth : ");
+      Serial.println(currentBlockWidth);
+      resetBlockTurning();
+      Left();
+    }
+
     // Serial.println("Second If ");
     //  && RightSensor > Right_Trun_Upper && RightSensor <= Right_Trun_Lower
 
@@ -298,6 +317,8 @@ void avoidance2() {
     // delay(300);
 
   }
+
+
 
   ////////////
   else {
