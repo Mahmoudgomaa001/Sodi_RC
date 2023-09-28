@@ -333,8 +333,8 @@ void avoidance2() {
   else {
     // Serial.println("Else stop ");
     // // Serial.println("First If Stop :");
-    // // Stop();
-    Forward();
+    Stop();
+    // Forward();
     // delay(450);
 
     // Left
