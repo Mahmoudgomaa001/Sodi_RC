@@ -256,10 +256,32 @@ void avoidance2() {
       Serial.println("First If Left :");
       Left();
       // delay(300);
-    } else {
+    } else if ((currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
+      Serial.print("Gomaa Hack Red-Left: ");
+      Serial.print("currentColorID: ");
+      Serial.print(currentColorID);
+      Serial.print(", currentBlockWidth : ");
+      Serial.println(currentBlockWidth);
+      resetBlockTurning();
+      Left();
+      delay(100);
+    } else if ((currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
+      Serial.print("Gomaa Hack Green-Right: ");
+      Serial.print("currentColorID: ");
+      Serial.print(currentColorID);
+      Serial.print(", currentBlockWidth : ");
+      Serial.println(currentBlockWidth);
+      resetBlockTurning();
+      Right();
+      delay(100);
+    }
+
+
+
+    else {
 
       Forward();
-      delay(100);
+      // delay(100);
       Serial.println("First If Forward :");
     }
     // Serial.println("First If ");
