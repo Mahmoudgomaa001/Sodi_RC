@@ -475,7 +475,7 @@ void avoidance4() {
       // if (currentColorID == Red_Color_ID) {
       //   // Red block detected, turn right around it
       //   Stop();
-      //   delay(300);
+      //   delay(100);
       //   Right();
       //   delay(100);
       //   Serial.println("Turn Right around Red");
