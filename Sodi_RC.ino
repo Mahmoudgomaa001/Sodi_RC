@@ -374,6 +374,7 @@ unsigned long stuckTimer = 0;      // Variable to store the time when the robot 
 unsigned long stuckTimeout = 500;  // Timeout period in milliseconds (adjust as needed)
 bool isStuck = false;              // Flag to indicate if the robot is stuck
 int lowSensorThreshold = 20;       // Threshold value to determine a low sensor reading
+int verylowSensorThreshold = 10;
 #define Front_Limit 90
 #define Right_Limit 60
 #define Left_Limit 40
@@ -443,7 +444,9 @@ void avoidance4() {
       //   delay(100);
       // }
       Backward();
-      delay(200);
+      delay(150);
+      Left();
+      delay(100);
       // Reset the stuck flag
       isStuck = false;
     }
@@ -511,7 +514,7 @@ void SonarSensor(int trigPin, int echoPin) {
 }
 
 void Forward() {
-  if (FrontSensor < lowSensorThreshold) {
+  if (FrontSensor < verylowSensorThreshold) {
     return;
   }
   myservo.write(90);
@@ -531,7 +534,7 @@ void Backward() {
 }
 
 void Right() {
-  if (RightSensor < lowSensorThreshold) {
+  if (RightSensor < verylowSensorThreshold) {
     return;
   }
   myservo.write(20);
@@ -542,7 +545,7 @@ void Right() {
 }
 
 void Left() {
-  if (LeftSensor < lowSensorThreshold) {
+  if (LeftSensor < verylowSensorThreshold) {
     return;
   }
   myservo.write(160);
