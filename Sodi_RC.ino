@@ -350,7 +350,7 @@ void avoidance2() {
 unsigned long stuckTimer = 0;    // Variable to store the time when the robot gets stuck
 unsigned long stuckTimeout = 0;  // Timeout period in milliseconds (adjust as needed)
 bool isStuck = false;            // Flag to indicate if the robot is stuck
-int lowSensorThreshold = 15;     // Threshold value to determine a low sensor reading
+int lowSensorThreshold = 20;     // Threshold value to determine a low sensor reading
 #define Front_Limit 90
 #define Right_Limit 50
 #define Left_Limit 40
@@ -372,7 +372,7 @@ void avoidance4() {
   Serial.println(LeftSensor);
 
   // Check if the robot is stuck
-  if (FrontSensor < lowSensorThreshold || RightSensor < lowSensorThreshold || LeftSensor < lowSensorThreshold) {
+  if (FrontSensor < lowSensorThreshold || RightSensor < lowSensorThreshold || LeftSensor < lowSensorThreshold && currentColorID != Red_Color_ID) {
     if (!isStuck) {
       // Robot is stuck, set the stuck flag and start the stuck timer
       isStuck = true;
@@ -416,6 +416,7 @@ void avoidance4() {
       if (RightSensor <= Right_Limit && LeftSensor >= Left_Limit) {
         // No obstacles detected, move forward
         Forward();
+        delay(100);
         Serial.println("Move Forward");
       } else if (RightSensor >= Right_Limit) {
         // Obstacle detected on the right, turn left
