@@ -199,7 +199,7 @@ void avoidance() {
 
 #define Front_Limit 90
 #define Right_Limit 50
-#define Left_Limit 10
+#define Left_Limit 40
 
 #define Front_Trun 190
 #define Right_Trun_Upper 55
@@ -403,7 +403,7 @@ void avoidance4() {
 
     // Continue with obstacle avoidance logic
     if (FrontSensor >= Front_Limit) {
-      if (RightSensor >= Right_Limit && LeftSensor >= Left_Limit) {
+      if (RightSensor <= Right_Limit && LeftSensor >= Left_Limit) {
         // No obstacles detected, move forward
         Forward();
         Serial.println("Move Forward");
