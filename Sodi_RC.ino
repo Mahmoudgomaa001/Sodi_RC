@@ -370,10 +370,10 @@ int calculateAverage(int trigPin, int echoPin) {
 
 
 
-unsigned long stuckTimer = 0;    // Variable to store the time when the robot gets stuck
-unsigned long stuckTimeout = 0;  // Timeout period in milliseconds (adjust as needed)
-bool isStuck = false;            // Flag to indicate if the robot is stuck
-int lowSensorThreshold = 20;     // Threshold value to determine a low sensor reading
+unsigned long stuckTimer = 0;      // Variable to store the time when the robot gets stuck
+unsigned long stuckTimeout = 500;  // Timeout period in milliseconds (adjust as needed)
+bool isStuck = false;              // Flag to indicate if the robot is stuck
+int lowSensorThreshold = 20;       // Threshold value to determine a low sensor reading
 #define Front_Limit 90
 #define Right_Limit 60
 #define Left_Limit 40
@@ -418,31 +418,32 @@ void avoidance4() {
       Serial.println("Stuck timeout elapsed, trying to find a way out!");
 
       // Add your code here to implement the workaround for getting unstuck
-      if (RightSensor < lowSensorThreshold && LeftSensor < lowSensorThreshold) {
-        // if (FrontSensor < lowSensorThreshold) {
-        // Both right and left sensors are stuck, move backward
-        Backward();
-        Serial.println("Move Backward");
-        // delay(100);
-      } else if (RightSensor < lowSensorThreshold) {
-        // Only right sensor is stuck, turn left
-        // Backward();
+      // if (RightSensor < lowSensorThreshold && LeftSensor < lowSensorThreshold) {
+      //   // if (FrontSensor < lowSensorThreshold) {
+      //   // Both right and left sensors are stuck, move backward
+      //   Backward();
+      //   Serial.println("Move Backward");
+      //   // delay(100);
+      // } else if (RightSensor < lowSensorThreshold) {
+      //   // Only right sensor is stuck, turn left
+      //   // Backward();
 
-        // Serial.println("Move Backward");
-        // delay(200);
-        Serial.println("Turn Left");
-        Left();
-        delay(100);
-      } else if (LeftSensor < lowSensorThreshold) {
-        // Only left sensor is stuck, turn right
-        // Backward();
-        // Serial.println("Move Backward");
-        // delay(200);
-        Serial.println("Turn Right");
-        Right();
-        delay(100);
-      }
-
+      //   // Serial.println("Move Backward");
+      //   // delay(200);
+      //   Serial.println("Turn Left");
+      //   Left();
+      //   delay(100);
+      // } else if (LeftSensor < lowSensorThreshold) {
+      //   // Only left sensor is stuck, turn right
+      //   // Backward();
+      //   // Serial.println("Move Backward");
+      //   // delay(200);
+      //   Serial.println("Turn Right");
+      //   Right();
+      //   delay(100);
+      // }
+      Backward();
+      delay(200);
       // Reset the stuck flag
       isStuck = false;
     }
@@ -475,8 +476,8 @@ void avoidance4() {
       //   Right();
       //   delay(100);
       //   Serial.println("Turn Right around Red");
-      // } 
-      
+      // }
+
       if (currentColorID == Green_Color_ID) {
         // Green block detected, turn left around it
         Stop();
@@ -510,7 +511,9 @@ void SonarSensor(int trigPin, int echoPin) {
 }
 
 void Forward() {
-
+  if (FrontSensor < lowSensorThreshold) {
+    return;
+  }
   myservo.write(90);
 
   analogWrite(ENA, 200);
@@ -528,7 +531,9 @@ void Backward() {
 }
 
 void Right() {
-
+  if (RightSensor < lowSensorThreshold) {
+    return;
+  }
   myservo.write(20);
 
   analogWrite(ENA, 255);
@@ -537,7 +542,9 @@ void Right() {
 }
 
 void Left() {
-
+  if (LeftSensor < lowSensorThreshold) {
+    return;
+  }
   myservo.write(160);
 
   analogWrite(ENA, 255);
