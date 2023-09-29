@@ -350,26 +350,16 @@ void avoidance2() {
 unsigned long stuckTimer = 0;  // Variable to store the time when the robot gets stuck
 unsigned long stuckTimeout = 5000;  // Timeout period in milliseconds (adjust as needed)
 bool isStuck = false;  // Flag to indicate if the robot is stuck
+int lowSensorThreshold = 10;  // Threshold value to determine a low sensor reading
 
 void avoidance4() {
-  SonarSensor(Trig_Front, Echo_Front);
-  FrontSensor = distance;
-
-  SonarSensor(Trig_Left, Echo_Left);
-  LeftSensor = distance;
-
-  SonarSensor(Trig_Right, Echo_Right);
-  RightSensor = distance;
-
-  Serial.print("Front Sensor: ");
-  Serial.println(FrontSensor);
-  Serial.print("Right Sensor: ");
-  Serial.println(RightSensor);
-  Serial.print("Left Sensor: ");
-  Serial.println(LeftSensor);
+  // Read sensor values
+  int FrontSensor = analogRead(FrontSensorPin);
+  int RightSensor = analogRead(RightSensorPin);
+  int LeftSensor = analogRead(LeftSensorPin);
 
   // Check if the robot is stuck
-  if (FrontSensor >= Front_Limit && RightSensor >= Right_Limit) {
+  if (FrontSensor < lowSensorThreshold || RightSensor < lowSensorThreshold || LeftSensor < lowSensorThreshold) {
     if (!isStuck) {
       // Robot is stuck, set the stuck flag and start the stuck timer
       isStuck = true;
@@ -380,51 +370,55 @@ void avoidance4() {
       Serial.println("Stuck timeout elapsed, trying to find a way out!");
 
       // Add your code here to implement the workaround for getting unstuck
-      int randomDirection = random(2);  // Randomly choose 0 (left) or 1 (right)
-
-      if (randomDirection == 0) {
+      if (RightSensor < lowSensorThreshold && LeftSensor < lowSensorThreshold) {
+        // Both right and left sensors are stuck, move backward
+        Backward();
+        Serial.println("Move Backward");
+      } else if (RightSensor < lowSensorThreshold) {
+        // Only right sensor is stuck, turn left
         Left();
         Serial.println("Turn Left");
-      } else {
+      } else if (LeftSensor < lowSensorThreshold) {
+        // Only left sensor is stuck, turn right
         Right();
         Serial.println("Turn Right");
       }
+
+      // Reset the stuck flag
+      isStuck = false;
     }
   } else {
-    // Robot is not stuck, reset the stuck flag
+    // Reset the stuck flag if the sensor readings are above the threshold
     isStuck = false;
 
     // Continue with obstacle avoidance logic
     if (FrontSensor >= Front_Limit) {
-      if (RightSensor >= Right_Limit) {
-        if (LeftSensor >= Left_Limit) {
-          Forward();
-          Serial.println("Move Forward");
-        } else {
-          Right();
-          Serial.println("Turn Right");
-        }
-      } else {
+      if (RightSensor >= Right_Limit && LeftSensor >= Left_Limit) {
+        // No obstacles detected, move forward
         Forward();
         Serial.println("Move Forward");
+      } else if (RightSensor >= Right_Limit) {
+        // Obstacle detected on the right, turn left
+        Left();
+        Serial.println("Turn Left");
+      } else if (LeftSensor >= Left_Limit) {
+        // Obstacle detected on the left, turn right
+        Right();
+        Serial.println("Turn Right");
       }
     } else {
-      if (RightSensor >= Right_Limit) {
-        if (currentColorID == Red_Color_ID) {
-          Right();
-          Serial.println("Turn Right around Red");
-        } else if (currentColorID == Green_Color_ID) {
-          Left();
-          Serial.println("Turn Left around Green");
-        }
+      if (currentColorID == Red_Color_ID) {
+        // Red block detected, turn right around it
+        Right();
+        Serial.println("Turn Right around Red");
+      } else if (currentColorID == Green_Color_ID) {
+        // Green block detected, turn left around it
+        Left();
+        Serial.println("Turn Left around Green");
       } else {
-        if (LeftSensor >= Left_Limit) {
-          Left();
-          Serial.println("Turn Left");
-        } else {
-          Forward();
-          Serial.println("Move Forward");
-        }
+        // No obstacles or specific color detected, turn left
+        Left();
+        Serial.println("Turn Left");
       }
     }
   }
