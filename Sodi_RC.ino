@@ -76,38 +76,39 @@ void setup() {
 
 void loop() {
 
-  delay(10);
+  // delay(10);
   // avoidance();
-  avoidance5();
-  // Forward();
-  // delay(3000);
+  // avoidance5();
+  Forward();
+  delay(10000);
+  Stop();
   //a7la msa
-  if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
-  else if (!huskylens.isLearned()) Serial.println(F("Nothing learned, press learn button on HUSKYLENS to learn one!"));
-  else if (!huskylens.available()) {
-    if (blueExist == true) {
-      Serial.println(F("No Thing on screen"));
-      blueExist = false;
-    }
+  // if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
+  // else if (!huskylens.isLearned()) Serial.println(F("Nothing learned, press learn button on HUSKYLENS to learn one!"));
+  // else if (!huskylens.available()) {
+  //   if (blueExist == true) {
+  //     Serial.println(F("No Thing on screen"));
+  //     blueExist = false;
+  //   }
 
-  } else {
+  // } else {
 
-    while (huskylens.available()) {
-      HUSKYLENSResult result = huskylens.read();
-      printResult(result);
+  //   while (huskylens.available()) {
+  //     HUSKYLENSResult result = huskylens.read();
+  //     printResult(result);
 
-      if (huskylens.count(ID1) == 0) {
-        blueExist = false;
-      } else if (blueExist == false && millis() - lastBlueTime > 1000) {
-        lastBlueTime = millis();
-        blueCount++;
-        blueExist = true;
-        if (blueCount == 12) stopp = 1;
-        Serial.print("Blue Found, count is :");
-        Serial.println(blueCount);
-      }
-    }
-  }
+  //     if (huskylens.count(ID1) == 0) {
+  //       blueExist = false;
+  //     } else if (blueExist == false && millis() - lastBlueTime > 1000) {
+  //       lastBlueTime = millis();
+  //       blueCount++;
+  //       blueExist = true;
+  //       if (blueCount == 12) stopp = 1;
+  //       Serial.print("Blue Found, count is :");
+  //       Serial.println(blueCount);
+  //     }
+  //   }
+  // }
 }
 
 void printResult(HUSKYLENSResult result) {
