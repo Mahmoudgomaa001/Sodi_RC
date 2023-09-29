@@ -444,9 +444,9 @@ void avoidance4() {
       //   delay(100);
       // }
       Backward();
-      delay(150);
+      delay(200);
       Left();
-      delay(100);
+      delay(200);
       // Reset the stuck flag
       isStuck = false;
     }
