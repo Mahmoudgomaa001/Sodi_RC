@@ -352,7 +352,7 @@ unsigned long stuckTimeout = 0;  // Timeout period in milliseconds (adjust as ne
 bool isStuck = false;            // Flag to indicate if the robot is stuck
 int lowSensorThreshold = 20;     // Threshold value to determine a low sensor reading
 #define Front_Limit 90
-#define Right_Limit 50
+#define Right_Limit 70
 #define Left_Limit 40
 
 void avoidance4() {
