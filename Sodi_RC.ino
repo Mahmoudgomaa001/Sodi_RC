@@ -78,8 +78,8 @@ void loop() {
 
   delay(10);
   // avoidance();
-  // avoidance5();
-  avoidance4();
+  avoidance5();
+  // avoidance4();
   // Forward();
   // delay(3000);
   //a7la msa
@@ -450,7 +450,7 @@ void avoidance4() {
         Serial.println("Turn Right");
       }
     } else {
-      if (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold) ) {
+      if (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold)) {
         // Red block detected, turn right around it
         Stop();
         delay(100);
@@ -510,14 +510,16 @@ void avoidance5() {
 
 
 
-  while (FrontSensor >= 60 && RightSensor >= 40) {
+  while (FrontSensor >= 20 && RightSensor >= 20) {
     Forward();
     SonarSensor(Trig_Front, Echo_Front);
     FrontSensor = distance;
     SonarSensor(Trig_Right, Echo_Right);
     RightSensor = distance;
   }
-  while (!(FrontSensor >= 60 && RightSensor >= 40)) {
+  while (!(FrontSensor >= 20 && RightSensor >= 20)) {
+    Serial.print("Left Sensor: ");
+    Serial.println(LeftSensor);
     Left();
     delay(50);
     Forward();
