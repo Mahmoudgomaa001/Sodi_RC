@@ -409,11 +409,12 @@ void avoidance4() {
         Serial.println("Move Forward");
       } else if (RightSensor >= Right_Limit) {
         // Obstacle detected on the right, turn left
-        Left();
+        Right();
+
         Serial.println("Turn Left");
       } else if (LeftSensor >= Left_Limit) {
         // Obstacle detected on the left, turn right
-        Right();
+        Left();
         Serial.println("Turn Right");
       }
     } else {
@@ -425,10 +426,13 @@ void avoidance4() {
         // Green block detected, turn left around it
         Left();
         Serial.println("Turn Left around Green");
-      } else {
+      } else if (LeftSensor >= Left_Limit) {
         // No obstacles or specific color detected, turn left
+
         Left();
         Serial.println("Turn Left");
+      } else {
+        Stop();
       }
     }
   }
