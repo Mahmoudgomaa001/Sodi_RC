@@ -78,7 +78,7 @@ void loop() {
 
   delay(10);
   // avoidance();
-  avoidance4();
+  avoidance5();
   // Forward();
   // delay(3000);
   //a7la msa
@@ -379,7 +379,7 @@ int verylowSensorThreshold = 10;
 #define Right_Limit 60
 #define Left_Limit 40
 
-void avoidance5() {
+void avoidance4() {
 
   if (stopp == 1) {
     Stop();
@@ -509,7 +509,7 @@ void avoidance5() {
   while (FrontSensor >= lowSensorThreshold && RightSensor >= lowSensorThreshold) {
     Forward();
   }
-  Stop();
+  Stop
 }
 
 
