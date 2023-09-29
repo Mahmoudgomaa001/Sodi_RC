@@ -380,19 +380,19 @@ int lowSensorThreshold = 20;     // Threshold value to determine a low sensor re
 
 void avoidance4() {
   // Read sensor values
-  // SonarSensor(Trig_Front, Echo_Front);
-  // FrontSensor = distance;
-  // SonarSensor(Trig_Left, Echo_Left);
-  // LeftSensor = distance;
-  // SonarSensor(Trig_Right, Echo_Right);
-  // RightSensor = distance;
+  SonarSensor(Trig_Front, Echo_Front);
+  FrontSensor = distance;
+  SonarSensor(Trig_Left, Echo_Left);
+  LeftSensor = distance;
+  SonarSensor(Trig_Right, Echo_Right);
+  RightSensor = distance;
 
 
   // Calculate the averages
 
-  FrontSensor=calculateAverage(Trig_Front, Echo_Front);
-  LeftSensor=calculateAverage(Trig_Left, Echo_Left);
-  RightSensor=calculateAverage(Trig_Right, Echo_Right);
+  // FrontSensor=calculateAverage(Trig_Front, Echo_Front);
+  // LeftSensor=calculateAverage(Trig_Left, Echo_Left);
+  // RightSensor=calculateAverage(Trig_Right, Echo_Right);
   // FrontSensor = distance;
   // SonarSensor(Trig_Left, Echo_Left);
   // LeftSensor = distance;
@@ -423,7 +423,7 @@ void avoidance4() {
         // Both right and left sensors are stuck, move backward
         Backward();
         Serial.println("Move Backward");
-        delay(100);
+        // delay(100);
       } else if (RightSensor < lowSensorThreshold) {
         // Only right sensor is stuck, turn left
         // Backward();
