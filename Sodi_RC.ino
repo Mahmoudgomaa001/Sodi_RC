@@ -347,7 +347,7 @@ void avoidance2() {
     // Left
   }
 }  //avoidness2
-const int numReadings = 5;  // Number of readings to average
+const int numReadings = 2;  // Number of readings to average
 
 
 
