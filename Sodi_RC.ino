@@ -459,7 +459,7 @@ void avoidance4() {
       if (RightSensor <= Right_Limit && LeftSensor >= Left_Limit) {
         // No obstacles detected, move forward
         Forward();
-        // delay(300);
+        delay(100);
         Serial.println("Move Forward");
       } else if (RightSensor >= Right_Limit) {
         // Obstacle detected on the right, turn left
