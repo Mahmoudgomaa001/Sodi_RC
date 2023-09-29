@@ -387,20 +387,22 @@ void avoidance4() {
         // Both right and left sensors are stuck, move backward
         Backward();
         Serial.println("Move Backward");
-        delay(100);
+        delay(200);
       } else if (RightSensor < lowSensorThreshold) {
         // Only right sensor is stuck, turn left
-
+        Backward();
+        Serial.println("Move Backward");
+        delay(200);
         Serial.println("Turn Left");
         Left();
         delay(100);
       } else if (LeftSensor < lowSensorThreshold) {
         // Only left sensor is stuck, turn right
-
+        Backward();
+        Serial.println("Move Backward");
+        delay(200);
         Serial.println("Turn Right");
         Right();
-
-
         delay(100);
       }
 
