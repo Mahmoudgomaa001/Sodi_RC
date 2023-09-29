@@ -486,10 +486,11 @@ void avoidance5() {
   // Read sensor values
   SonarSensor(Trig_Front, Echo_Front);
   FrontSensor = distance;
-  SonarSensor(Trig_Left, Echo_Left);
-  LeftSensor = distance;
   SonarSensor(Trig_Right, Echo_Right);
   RightSensor = distance;
+  SonarSensor(Trig_Left, Echo_Left);
+  LeftSensor = distance;
+
   // Calculate the averages
   // FrontSensor=calculateAverage(Trig_Front, Echo_Front);
   // LeftSensor=calculateAverage(Trig_Left, Echo_Left);
@@ -507,6 +508,11 @@ void avoidance5() {
   Serial.println(LeftSensor);
 
   while (FrontSensor >= lowSensorThreshold && RightSensor >= lowSensorThreshold) {
+    // Read sensor values
+    SonarSensor(Trig_Front, Echo_Front);
+    FrontSensor = distance;
+    SonarSensor(Trig_Right, Echo_Right);
+    RightSensor = distance;
     Forward();
   }
   Stop
