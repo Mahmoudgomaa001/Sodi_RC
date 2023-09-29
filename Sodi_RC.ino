@@ -199,7 +199,7 @@ void avoidance() {
 ///// الليمت يسطا
 
 #define Front_Limit 90
-#define Right_Limit 35
+#define Right_Limit 50
 #define Left_Limit 40
 
 #define Front_Trun 190
@@ -552,7 +552,7 @@ void Forward() {
   }
   myservo.write(90);
 
-  analogWrite(ENA, 255);
+  analogWrite(ENA, 200);
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
 }
