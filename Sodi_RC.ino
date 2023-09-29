@@ -380,6 +380,12 @@ int verylowSensorThreshold = 10;
 #define Left_Limit 40
 
 void avoidance4() {
+  
+  if (stopp == 1) {
+    Stop();
+    return;
+  }
+
   // Read sensor values
   SonarSensor(Trig_Front, Echo_Front);
   FrontSensor = distance;
@@ -387,10 +393,7 @@ void avoidance4() {
   LeftSensor = distance;
   SonarSensor(Trig_Right, Echo_Right);
   RightSensor = distance;
-
-
   // Calculate the averages
-
   // FrontSensor=calculateAverage(Trig_Front, Echo_Front);
   // LeftSensor=calculateAverage(Trig_Left, Echo_Left);
   // RightSensor=calculateAverage(Trig_Right, Echo_Right);
@@ -399,7 +402,6 @@ void avoidance4() {
   // LeftSensor = distance;
   // SonarSensor(Trig_Right, Echo_Right);
   // RightSensor = distance;
-
   Serial.print("Front Sensor: ");
   Serial.println(FrontSensor);
   Serial.print("Right Sensor: ");
@@ -417,32 +419,7 @@ void avoidance4() {
     } else if (millis() - stuckTimer >= stuckTimeout) {
       // Stuck timeout has elapsed, try to find a way out
       Serial.println("Stuck timeout elapsed, trying to find a way out!");
-
       // Add your code here to implement the workaround for getting unstuck
-      // if (RightSensor < lowSensorThreshold && LeftSensor < lowSensorThreshold) {
-      //   // if (FrontSensor < lowSensorThreshold) {
-      //   // Both right and left sensors are stuck, move backward
-      //   Backward();
-      //   Serial.println("Move Backward");
-      //   // delay(100);
-      // } else if (RightSensor < lowSensorThreshold) {
-      //   // Only right sensor is stuck, turn left
-      //   // Backward();
-
-      //   // Serial.println("Move Backward");
-      //   // delay(200);
-      //   Serial.println("Turn Left");
-      //   Left();
-      //   delay(100);
-      // } else if (LeftSensor < lowSensorThreshold) {
-      //   // Only left sensor is stuck, turn right
-      //   // Backward();
-      //   // Serial.println("Move Backward");
-      //   // delay(200);
-      //   Serial.println("Turn Right");
-      //   Right();
-      //   delay(100);
-      // }
       Backward();
       delay(300);
       Left();
@@ -459,7 +436,7 @@ void avoidance4() {
       if (RightSensor <= Right_Limit && LeftSensor >= Left_Limit) {
         // No obstacles detected, move forward
         Forward();
-        delay(100);
+        // delay(100);
         Serial.println("Move Forward");
       } else if (RightSensor >= Right_Limit) {
         // Obstacle detected on the right, turn left
@@ -490,7 +467,6 @@ void avoidance4() {
         Serial.println("Turn Left around Green");
       } else if (LeftSensor >= Left_Limit) {
         // No obstacles or specific color detected, turn left
-
         Left();
         Serial.println("Turn Left");
       } else {
@@ -498,7 +474,6 @@ void avoidance4() {
       }
     }
   }
-
   delay(100);
 }
 
