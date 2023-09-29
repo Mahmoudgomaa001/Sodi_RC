@@ -347,22 +347,99 @@ void avoidance2() {
     // Left
   }
 }  //avoidness2
+const int numReadings = 5;  // Number of readings to average
+
+int frontReadings[numReadings];  // Array to store the front sensor readings
+int frontIndex = 0;              // Index of the current front sensor reading
+int frontTotal = 0;              // Sum of the front sensor readings
+
+int leftReadings[numReadings];  // Array to store the left sensor readings
+int leftIndex = 0;              // Index of the current left sensor reading
+int leftTotal = 0;              // Sum of the left sensor readings
+
+int rightReadings[numReadings];  // Array to store the right sensor readings
+int rightIndex = 0;              // Index of the current right sensor reading
+int rightTotal = 0;              // Sum of the right sensor readings
+
+
+void readFrontSensor() {
+  // Read the front sensor value
+  SonarSensor(Trig_Front, Echo_Front);
+  int frontDistance = distance;
+
+  // Add the new reading to the total and subtract the oldest reading
+  frontTotal = frontTotal - frontReadings[frontIndex];
+  frontReadings[frontIndex] = frontDistance;
+  frontTotal = frontTotal + frontReadings[frontIndex];
+
+  // Increment the index and wrap around if necessary
+  frontIndex = (frontIndex + 1) % numReadings;
+}
+
+void readLeftSensor() {
+  // Read the left sensor value
+  SonarSensor(Trig_Left, Echo_Left);
+  int leftDistance = distance;
+
+  // Add the new reading to the total and subtract the oldest reading
+  leftTotal = leftTotal - leftReadings[leftIndex];
+  leftReadings[leftIndex] = leftDistance;
+  leftTotal = leftTotal + leftReadings[leftIndex];
+
+  // Increment the index and wrap around if necessary
+  leftIndex = (leftIndex + 1) % numReadings;
+}
+
+void readRightSensor() {
+  // Read the right sensor value
+  SonarSensor(Trig_Right, Echo_Right);
+  int rightDistance = distance;
+
+  // Add the new reading to the total and subtract the oldest reading
+  rightTotal = rightTotal - rightReadings[rightIndex];
+  rightReadings[rightIndex] = rightDistance;
+  rightTotal = rightTotal + rightReadings[rightIndex];
+
+  // Increment the index and wrap around if necessary
+  rightIndex = (rightIndex + 1) % numReadings;
+}
+
+int calculateAverage(int readings[], int numReadings) {
+  // Calculate the average of the readings
+  int total = 0;
+  for (int i = 0; i < numReadings; i++) {
+    total += readings[i];
+  }
+  int average = total / numReadings;
+  return average;
+}
+
+
+
+
 unsigned long stuckTimer = 0;    // Variable to store the time when the robot gets stuck
 unsigned long stuckTimeout = 0;  // Timeout period in milliseconds (adjust as needed)
 bool isStuck = false;            // Flag to indicate if the robot is stuck
 int lowSensorThreshold = 20;     // Threshold value to determine a low sensor reading
 #define Front_Limit 90
-#define Right_Limit 70
+#define Right_Limit 60
 #define Left_Limit 40
 
 void avoidance4() {
   // Read sensor values
-  SonarSensor(Trig_Front, Echo_Front);
-  FrontSensor = distance;
-  SonarSensor(Trig_Left, Echo_Left);
-  LeftSensor = distance;
-  SonarSensor(Trig_Right, Echo_Right);
-  RightSensor = distance;
+  // SonarSensor(Trig_Front, Echo_Front);
+  // FrontSensor = distance;
+  // SonarSensor(Trig_Left, Echo_Left);
+  // LeftSensor = distance;
+  // SonarSensor(Trig_Right, Echo_Right);
+  // RightSensor = distance;
+
+
+  // Calculate the averages
+  FrontSensor = calculateAverage(frontReadings, numReadings);
+  LeftSensor = calculateAverage(leftReadings, numReadings);
+  RightSensor = calculateAverage(rightReadings, numReadings);
+
 
   Serial.print("Front Sensor: ");
   Serial.println(FrontSensor);
@@ -388,7 +465,7 @@ void avoidance4() {
         // Both right and left sensors are stuck, move backward
         Backward();
         Serial.println("Move Backward");
-        delay(200);
+        delay(100);
       } else if (RightSensor < lowSensorThreshold) {
         // Only right sensor is stuck, turn left
         // Backward();
