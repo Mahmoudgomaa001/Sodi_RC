@@ -348,7 +348,7 @@ void avoidance2() {
   }
 }  //avoidness2
 unsigned long stuckTimer = 0;       // Variable to store the time when the robot gets stuck
-unsigned long stuckTimeout = 5000;  // Timeout period in milliseconds (adjust as needed)
+unsigned long stuckTimeout = 1000;  // Timeout period in milliseconds (adjust as needed)
 bool isStuck = false;               // Flag to indicate if the robot is stuck
 int lowSensorThreshold = 10;        // Threshold value to determine a low sensor reading
 
