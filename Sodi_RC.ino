@@ -460,8 +460,8 @@ void avoidance4() {
       Serial.println("Stuck timeout elapsed, trying to find a way out!");
 
       // Add your code here to implement the workaround for getting unstuck
-      // if (RightSensor < lowSensorThreshold && LeftSensor < lowSensorThreshold) {
-      if (FrontSensor < lowSensorThreshold) {
+      if (RightSensor < lowSensorThreshold && LeftSensor < lowSensorThreshold) {
+      // if (FrontSensor < lowSensorThreshold) {
         // Both right and left sensors are stuck, move backward
         Backward();
         Serial.println("Move Backward");
