@@ -198,6 +198,9 @@ void avoidance() {
 ///// الليمت يسطا
 
 #define Front_Limit 90
+#define Right_Limit 50
+#define Left_Limit 10
+
 #define Front_Trun 190
 #define Right_Trun_Upper 55
 #define Right_Trun_Lower 45
