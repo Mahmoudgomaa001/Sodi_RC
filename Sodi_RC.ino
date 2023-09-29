@@ -78,8 +78,8 @@ void loop() {
 
   delay(10);
   // avoidance();
-  avoidance5();
-  // avoidance4();
+  // avoidance5();
+  avoidance4();
   // Forward();
   // delay(3000);
   //a7la msa
@@ -450,7 +450,7 @@ void avoidance4() {
         Serial.println("Turn Right");
       }
     } else {
-      if (currentColorID == Red_Color_ID) {
+      if (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold) ) {
         // Red block detected, turn right around it
         Stop();
         delay(100);
