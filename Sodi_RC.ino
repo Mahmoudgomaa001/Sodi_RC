@@ -78,7 +78,7 @@ void loop() {
 
   delay(10);
   // avoidance();
-  avoidance2();
+  avoidance4();
   // Forward();
   // delay(3000);
   //a7la msa
@@ -343,44 +343,91 @@ void avoidance2() {
 
     // Left
   }
-
-
-
-  // } else if (RightSensor <= 30 || (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
-  //   if ((currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold))) {
-  //     Serial.print("Gomaa Hack Red-Left: ");
-  //     Serial.print("currentColorID: ");
-  //     Serial.print(currentColorID);
-  //     Serial.print(", currentBlockWidth : ");
-  //     Serial.println(currentBlockWidth);
-  //     resetBlockTurning();
-  //   }
-  //   Left();
-  //   delay(300);
-
-  // }
-  // else if (LeftSensor <= 30  || (currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
-  //   if ((currentColorID == Green_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Green_Block_Width_Upper_Threshold && currentBlockWidth > Green_Block_Width_Lower_Threshold))) {
-  //     Serial.print("Gomaa Hack Green-Right: ");
-  //     Serial.print("currentColorID: ");
-  //     Serial.print(currentColorID);
-  //     Serial.print(", currentBlockWidth : ");
-  //     Serial.println(currentBlockWidth);
-  //     resetBlockTurning();
-  //   }
-  //   Right();
-  //   delay(300);
-
-  // } else if (RightSensor >= 35) {
-  //   Right();
-  //   delay(300);
-  // } else {
-  //   Forward();
-  //   delay(300);
-  // }
-
-  // delay(5);
 }  //avoidness2
+unsigned long stuckTimer = 0;  // Variable to store the time when the robot gets stuck
+unsigned long stuckTimeout = 5000;  // Timeout period in milliseconds (adjust as needed)
+bool isStuck = false;  // Flag to indicate if the robot is stuck
+
+void avoidance4() {
+  SonarSensor(Trig_Front, Echo_Front);
+  FrontSensor = distance;
+
+  SonarSensor(Trig_Left, Echo_Left);
+  LeftSensor = distance;
+
+  SonarSensor(Trig_Right, Echo_Right);
+  RightSensor = distance;
+
+  Serial.print("Front Sensor: ");
+  Serial.println(FrontSensor);
+  Serial.print("Right Sensor: ");
+  Serial.println(RightSensor);
+  Serial.print("Left Sensor: ");
+  Serial.println(LeftSensor);
+
+  // Check if the robot is stuck
+  if (FrontSensor >= Front_Limit && RightSensor >= Right_Limit) {
+    if (!isStuck) {
+      // Robot is stuck, set the stuck flag and start the stuck timer
+      isStuck = true;
+      stuckTimer = millis();
+      Serial.println("Robot is stuck!");
+    } else if (millis() - stuckTimer >= stuckTimeout) {
+      // Stuck timeout has elapsed, try to find a way out
+      Serial.println("Stuck timeout elapsed, trying to find a way out!");
+
+      // Add your code here to implement the workaround for getting unstuck
+      int randomDirection = random(2);  // Randomly choose 0 (left) or 1 (right)
+
+      if (randomDirection == 0) {
+        Left();
+        Serial.println("Turn Left");
+      } else {
+        Right();
+        Serial.println("Turn Right");
+      }
+    }
+  } else {
+    // Robot is not stuck, reset the stuck flag
+    isStuck = false;
+
+    // Continue with obstacle avoidance logic
+    if (FrontSensor >= Front_Limit) {
+      if (RightSensor >= Right_Limit) {
+        if (LeftSensor >= Left_Limit) {
+          Forward();
+          Serial.println("Move Forward");
+        } else {
+          Right();
+          Serial.println("Turn Right");
+        }
+      } else {
+        Forward();
+        Serial.println("Move Forward");
+      }
+    } else {
+      if (RightSensor >= Right_Limit) {
+        if (currentColorID == Red_Color_ID) {
+          Right();
+          Serial.println("Turn Right around Red");
+        } else if (currentColorID == Green_Color_ID) {
+          Left();
+          Serial.println("Turn Left around Green");
+        }
+      } else {
+        if (LeftSensor >= Left_Limit) {
+          Left();
+          Serial.println("Turn Left");
+        } else {
+          Forward();
+          Serial.println("Move Forward");
+        }
+      }
+    }
+  }
+
+  delay(100);
+}
 
 
 void SonarSensor(int trigPin, int echoPin) {
