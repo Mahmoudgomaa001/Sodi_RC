@@ -379,8 +379,8 @@ int verylowSensorThreshold = 10;
 #define Right_Limit 60
 #define Left_Limit 40
 
-void avoidance4() {
-  
+void avoidance5() {
+
   if (stopp == 1) {
     Stop();
     return;
@@ -475,6 +475,41 @@ void avoidance4() {
     }
   }
   delay(100);
+}
+void avoidance5() {
+
+  if (stopp == 1) {
+    Stop();
+    return;
+  }
+
+  // Read sensor values
+  SonarSensor(Trig_Front, Echo_Front);
+  FrontSensor = distance;
+  SonarSensor(Trig_Left, Echo_Left);
+  LeftSensor = distance;
+  SonarSensor(Trig_Right, Echo_Right);
+  RightSensor = distance;
+  // Calculate the averages
+  // FrontSensor=calculateAverage(Trig_Front, Echo_Front);
+  // LeftSensor=calculateAverage(Trig_Left, Echo_Left);
+  // RightSensor=calculateAverage(Trig_Right, Echo_Right);
+  // FrontSensor = distance;
+  // SonarSensor(Trig_Left, Echo_Left);
+  // LeftSensor = distance;
+  // SonarSensor(Trig_Right, Echo_Right);
+  // RightSensor = distance;
+  Serial.print("Front Sensor: ");
+  Serial.println(FrontSensor);
+  Serial.print("Right Sensor: ");
+  Serial.println(RightSensor);
+  Serial.print("Left Sensor: ");
+  Serial.println(LeftSensor);
+
+  while (FrontSensor >= lowSensorThreshold && RightSensor >= lowSensorThreshold) {
+    Forward();
+  }
+  Stop();
 }
 
 
