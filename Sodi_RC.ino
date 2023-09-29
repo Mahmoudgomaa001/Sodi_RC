@@ -510,7 +510,7 @@ void avoidance5() {
 
   while (true) {
 
-    if (FrontSensor >= 50 && RightSensor >= 40) {
+    if (FrontSensor >= 60 && RightSensor >= 40) {
       Forward();
       SonarSensor(Trig_Front, Echo_Front);
       FrontSensor = distance;
