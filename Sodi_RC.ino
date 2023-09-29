@@ -375,7 +375,7 @@ unsigned long stuckTimeout = 0;  // Timeout period in milliseconds (adjust as ne
 bool isStuck = false;            // Flag to indicate if the robot is stuck
 int lowSensorThreshold = 20;     // Threshold value to determine a low sensor reading
 #define Front_Limit 90
-#define Right_Limit 60
+#define Right_Limit 50
 #define Left_Limit 40
 
 void avoidance4() {
@@ -468,14 +468,16 @@ void avoidance4() {
         Serial.println("Turn Right");
       }
     } else {
-      if (currentColorID == Red_Color_ID) {
-        // Red block detected, turn right around it
-        Stop();
-        delay(300);
-        Right();
-        delay(100);
-        Serial.println("Turn Right around Red");
-      } else if (currentColorID == Green_Color_ID) {
+      // if (currentColorID == Red_Color_ID) {
+      //   // Red block detected, turn right around it
+      //   Stop();
+      //   delay(300);
+      //   Right();
+      //   delay(100);
+      //   Serial.println("Turn Right around Red");
+      // } 
+      
+      else if (currentColorID == Green_Color_ID) {
         // Green block detected, turn left around it
         Stop();
         delay(300);
