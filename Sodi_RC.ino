@@ -517,7 +517,7 @@ void avoidance5() {
     RightSensor = distance;
   }
   Left();
-  delay(100);
+  delay(200);
 
 
   // Stop();
