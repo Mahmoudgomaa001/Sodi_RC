@@ -508,15 +508,18 @@ void avoidance5() {
   Serial.print("Left Sensor: ");
   Serial.println(LeftSensor);
 
-  while (FrontSensor >= lowSensorThreshold && RightSensor >= lowSensorThreshold) {
+  while (FrontSensor >= 90 && RightSensor >= 50) {
     // Read sensor values
     Forward();
     SonarSensor(Trig_Front, Echo_Front);
     FrontSensor = distance;
     SonarSensor(Trig_Right, Echo_Right);
     RightSensor = distance;
-    
   }
+  Left();
+  delay(300);
+
+
   Stop();
 }
 
