@@ -422,9 +422,9 @@ void avoidance4() {
       Serial.println("Stuck timeout elapsed, trying to find a way out!");
       // Add your code here to implement the workaround for getting unstuck
       Backward();
-      delay(300);
+      delay(350);
       Left();
-      delay(200);
+      delay(250);
       // Reset the stuck flag
       isStuck = false;
     }
