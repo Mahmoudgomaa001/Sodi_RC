@@ -472,20 +472,20 @@ void avoidance4() {
         Serial.println("Turn Right");
       }
     } else {
-      if (currentColorID == Red_Color_ID) {
-        // Red block detected, turn right around it
-        // Stop();
-        // delay(300);
-        Right();
-        delay(100);
-        Serial.println("Turn Right around Red");
-      }
+      // if (currentColorID == Red_Color_ID) {
+      //   // Red block detected, turn right around it
+      //   Stop();
+      //   delay(300);
+      //   Right();
+      //   delay(100);
+      //   Serial.println("Turn Right around Red");
+      // }
 
       if (currentColorID == Green_Color_ID) {
         // Green block detected, turn left around it
         Stop();
+        // delay(100);
         Left();
-        delay(100);
         // delay(100);
         Serial.println("Turn Left around Green");
       } else if (LeftSensor >= Left_Limit) {
