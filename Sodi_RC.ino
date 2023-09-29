@@ -78,8 +78,8 @@ void loop() {
 
   delay(10);
   // avoidance();
-  // avoidance5();
-  avoidance4();
+  avoidance5();
+  // avoidance4();
   // Forward();
   // delay(3000);
   //a7la msa
@@ -510,11 +510,12 @@ void avoidance5() {
 
   while (FrontSensor >= lowSensorThreshold && RightSensor >= lowSensorThreshold) {
     // Read sensor values
+    Forward();
     SonarSensor(Trig_Front, Echo_Front);
     FrontSensor = distance;
     SonarSensor(Trig_Right, Echo_Right);
     RightSensor = distance;
-    Forward();
+    
   }
   Stop();
 }
