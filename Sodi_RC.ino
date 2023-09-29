@@ -520,7 +520,7 @@ void avoidance5() {
   delay(300);
 
 
-  Stop();
+  // Stop();
 }
 
 
