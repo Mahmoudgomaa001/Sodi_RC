@@ -377,7 +377,7 @@ int calculateAverage(int trigPin, int echoPin) {
 
 
 unsigned long stuckTimer = 0;      // Variable to store the time when the robot gets stuck
-unsigned long stuckTimeout = 500;  // Timeout period in milliseconds (adjust as needed)
+unsigned long stuckTimeout = 2000;  // Timeout period in milliseconds (adjust as needed)
 bool isStuck = false;              // Flag to indicate if the robot is stuck
 int lowSensorThreshold = 20;       // Threshold value to determine a low sensor reading
 int verylowSensorThreshold = 10;
@@ -659,11 +659,13 @@ void Right() {
 void Round1() {
   FrontSpeed = 255;
   USE_GREEN_BLOCK = false;
+  stuckTimeout=2000;
   avoidance4();
 }
 void Round2() {
   FrontSpeed = 200;
   USE_GREEN_BLOCK = true;
+  stuckTimeout=500;
   avoidance4();
 }
 void Reverse() {
