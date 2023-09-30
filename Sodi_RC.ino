@@ -108,7 +108,7 @@ void loop() {
         lastBlueTime = millis();
         blueCount++;
         blueExist = true;
-        if (blueCount == 12) stopp = 1;
+        if (blueCount == 14) stopp = 1;
         Serial.print("Blue Found, count is :");
         Serial.println(blueCount);
       }
@@ -591,11 +591,12 @@ void avoidance6() {
         Serial.println("Move Forward");
       } else if (LeftSensor >= Left_Limit) {
         // Obstacle detected on the left, turn right
-        Right();
+        Left();
+
         Serial.println("Turn Right");
       } else if (RightSensor >= Right_Limit) {
         // Obstacle detected on the right, turn left
-        Left();
+        Right();
         Serial.println("Turn Left");
       }
     } else {
@@ -603,7 +604,7 @@ void avoidance6() {
         // Green block detected, turn right around it
         Stop();
         delay(100);
-        Right();
+        Left();
         Serial.println("Turn Right around Green");
       } else if (RightSensor >= Right_Limit) {
         // No obstacles or specific color detected, turn right
@@ -662,20 +663,22 @@ void Right() {
 void Round1() {
   FrontSpeed = 255;
   USE_GREEN_BLOCK = false;
-  stuckTimeout = 1000;
-  BackwardDelay = 200;
+  stuckTimeout = 600;
+  BackwardDelay = 300;
   avoidance4();
 }
 void Round2() {
-  FrontSpeed = 200;
+  FrontSpeed = 230;
   USE_GREEN_BLOCK = true;
   stuckTimeout = 500;
   BackwardDelay = 350;
   avoidance4();
 }
 void Reverse() {
-  FrontSpeed = 200;
+  FrontSpeed = 230;
   USE_GREEN_BLOCK = true;
+  stuckTimeout = 500;
+  BackwardDelay = 350;
   avoidance6();
 }
 
