@@ -37,6 +37,7 @@ const int ID2 = 2;  //second learned results. colored result on HUSKYLENS screen
 int currentColorID = 0;
 int currentBlockWidth = 0;
 
+
 #define Trig_Right 10
 
 
@@ -44,6 +45,9 @@ bool blueExist = false;
 int blueCount = 0;
 int lastBlueTime = 0;
 int stopp = 0;
+
+int FrontSpeed = 200;
+bool USE_GREEN_BLOCK = false;
 
 void printResult(HUSKYLENSResult result);
 
@@ -77,11 +81,12 @@ void setup() {
 void loop() {
 
   delay(10);
-  // avoidance();
+  // avoidance5 ابقى جرب
   // avoidance5();
-  avoidance4();
-  // Forward();
-  // delay(3000);
+  Round1();
+  // Round2();
+
+
   //a7la msa
   if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
   else if (!huskylens.isLearned()) Serial.println(F("Nothing learned, press learn button on HUSKYLENS to learn one!"));
@@ -458,8 +463,8 @@ void avoidance4() {
       //   delay(100);
       //   Serial.println("Turn Right around Red");
       // }
-
-      if (currentColorID == Green_Color_ID) {
+     
+      if (currentColorID == Green_Color_ID && USE_GREEN_BLOCK) {
         // Green block detected, turn left around it
         Stop();
         delay(100);
@@ -517,13 +522,11 @@ void avoidance5() {
     SonarSensor(Trig_Right, Echo_Right);
     RightSensor = distance;
   }
-  while (!(FrontSensor >= 20 && RightSensor >= 20)) {
+  while (!(FrontSensor >= 20)) {
     Serial.print("Left Sensor: ");
     Serial.println(LeftSensor);
     Left();
     delay(50);
-    Forward();
-    delay(100);
   }
 
   // Read sensor values
@@ -552,7 +555,7 @@ void Forward() {
   }
   myservo.write(90);
 
-  analogWrite(ENA, 200);
+  analogWrite(ENA, FrontSpeed);
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
 }
@@ -575,6 +578,16 @@ void Right() {
   analogWrite(ENA, 255);
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
+}
+void Round1() {
+  FrontSpeed = 255;
+  USE_GREEN_BLOCK = false;
+  avoidance4();
+}
+void Round2() {
+  FrontSpeed = 200;
+  USE_GREEN_BLOCK = true;
+  avoidance4();
 }
 
 void Left() {
