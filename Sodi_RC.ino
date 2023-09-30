@@ -85,7 +85,7 @@ void loop() {
   // avoidance5();
   Round1();
   // Round2();
-
+  // Reverse();
 
   //a7la msa
   if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
@@ -463,7 +463,7 @@ void avoidance4() {
       //   delay(100);
       //   Serial.println("Turn Right around Red");
       // }
-     
+
       if (currentColorID == Green_Color_ID && USE_GREEN_BLOCK) {
         // Green block detected, turn left around it
         Stop();
@@ -537,6 +537,83 @@ void avoidance5() {
 
   // Stop();
 }
+void avoidance6() {
+
+  if (stopp == 1) {
+    Stop();
+    return;
+  }
+
+  // Read sensor values
+  SonarSensor(Trig_Front, Echo_Front);
+  FrontSensor = distance;
+  SonarSensor(Trig_Left, Echo_Left);
+  LeftSensor = distance;
+  SonarSensor(Trig_Right, Echo_Right);
+  RightSensor = distance;
+  Serial.print("Front Sensor: ");
+  Serial.println(FrontSensor);
+  Serial.print("Right Sensor: ");
+  Serial.println(RightSensor);
+  Serial.print("Left Sensor: ");
+  Serial.println(LeftSensor);
+
+  // Check if the robot is stuck
+  if (FrontSensor < lowSensorThreshold || RightSensor < lowSensorThreshold || LeftSensor < lowSensorThreshold && currentColorID != Red_Color_ID) {
+    if (!isStuck) {
+      // Robot is stuck, set the stuck flag and start the stuck timer
+      isStuck = true;
+      stuckTimer = millis();
+      Serial.println("Robot is stuck!");
+    } else if (millis() - stuckTimer >= stuckTimeout) {
+      // Stuck timeout has elapsed, try to find a way out
+      Serial.println("Stuck timeout elapsed, trying to find a way out!");
+      // Add your code here to implement the workaround for getting unstuck
+      Backward();
+      delay(350);
+      Right();
+      delay(250);
+      // Reset the stuck flag
+      isStuck = false;
+    }
+  } else {
+    // Reset the stuck flag if the sensor readings are above the threshold
+    isStuck = false;
+
+    // Continue with obstacle avoidance logic
+    if (FrontSensor >= Front_Limit) {
+      if (LeftSensor <= Left_Limit && RightSensor >= Right_Limit) {
+        // No obstacles detected, move forward
+        Forward();
+        Serial.println("Move Forward");
+      } else if (LeftSensor >= Left_Limit) {
+        // Obstacle detected on the left, turn right
+        Right();
+        Serial.println("Turn Right");
+      } else if (RightSensor >= Right_Limit) {
+        // Obstacle detected on the right, turn left
+        Left();
+        Serial.println("Turn Left");
+      }
+    } else {
+      if (currentColorID == Green_Color_ID && USE_GREEN_BLOCK) {
+        // Green block detected, turn right around it
+        Stop();
+        delay(100);
+        Right();
+        Serial.println("Turn Right around Green");
+      } else if (RightSensor >= Right_Limit) {
+        // No obstacles or specific color detected, turn right
+        Right();
+        Serial.println("Turn Right");
+      } else {
+        Stop();
+      }
+    }
+  }
+  delay(100);
+}
+
 
 
 void SonarSensor(int trigPin, int echoPin) {
@@ -589,6 +666,13 @@ void Round2() {
   USE_GREEN_BLOCK = true;
   avoidance4();
 }
+void Reverse() {
+  FrontSpeed = 200;
+  USE_GREEN_BLOCK = true;
+  avoidance6();
+}
+
+
 
 void Left() {
   if (LeftSensor < verylowSensorThreshold) {
