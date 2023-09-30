@@ -384,8 +384,9 @@ int verylowSensorThreshold = 10;
 #define Front_Limit 90
 #define Right_Limit 60
 #define Left_Limit 40
+
 int BackwardDelay = 350;
-int lowSensorThreshold = 20;
+
 
 void avoidance4() {
 
