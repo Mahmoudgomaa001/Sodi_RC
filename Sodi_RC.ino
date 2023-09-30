@@ -83,9 +83,9 @@ void loop() {
   delay(10);
   // avoidance5 ابقى جرب
   // avoidance5();
-  Round1();
+  // Round1();
   // Round2();
-  // Reverse();
+  Reverse();
 
   //a7la msa
   if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
