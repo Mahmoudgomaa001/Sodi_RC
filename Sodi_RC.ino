@@ -575,7 +575,7 @@ void avoidance6() {
       Backward();
       delay(BackwardDelay);
       Right();
-      delay(250);
+      delay(350);
       // Reset the stuck flag
       isStuck = false;
     }
