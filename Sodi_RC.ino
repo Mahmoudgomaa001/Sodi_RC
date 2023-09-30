@@ -377,13 +377,15 @@ int calculateAverage(int trigPin, int echoPin) {
 
 
 unsigned long stuckTimer = 0;      // Variable to store the time when the robot gets stuck
-unsigned long stuckTimeout = 2000;  // Timeout period in milliseconds (adjust as needed)
+unsigned long stuckTimeout = 500;  // Timeout period in milliseconds (adjust as needed)
 bool isStuck = false;              // Flag to indicate if the robot is stuck
 int lowSensorThreshold = 20;       // Threshold value to determine a low sensor reading
 int verylowSensorThreshold = 10;
 #define Front_Limit 90
 #define Right_Limit 60
 #define Left_Limit 40
+int BackwardDelay = 350;
+int lowSensorThreshold = 20;
 
 void avoidance4() {
 
@@ -570,7 +572,7 @@ void avoidance6() {
       Serial.println("Stuck timeout elapsed, trying to find a way out!");
       // Add your code here to implement the workaround for getting unstuck
       Backward();
-      delay(350);
+      delay(BackwardDelay);
       Right();
       delay(250);
       // Reset the stuck flag
@@ -659,13 +661,15 @@ void Right() {
 void Round1() {
   FrontSpeed = 255;
   USE_GREEN_BLOCK = false;
-  stuckTimeout=2000;
+  stuckTimeout = 1000;
+  BackwardDelay = 200;
   avoidance4();
 }
 void Round2() {
   FrontSpeed = 200;
   USE_GREEN_BLOCK = true;
-  stuckTimeout=500;
+  stuckTimeout = 500;
+  BackwardDelay = 350;
   avoidance4();
 }
 void Reverse() {
