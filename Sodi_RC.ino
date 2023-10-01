@@ -600,13 +600,25 @@ void avoidance6() {
         Serial.println("Turn Left");
       }
     } else {
-      if (currentColorID == Green_Color_ID && USE_GREEN_BLOCK) {
-        // Green block detected, turn right around it
+
+      // if (currentColorID == Red_Color_ID && (currentBlockWidth != 0 && currentBlockWidth < Red_Block_Width_Upper_Threshold && currentBlockWidth > Red_Block_Width_Lower_Threshold)) {
+      if (currentColorID == Red_Color_ID) {
+        // Red block detected, turn right around it
         Stop();
         delay(100);
-        Left();
-        Serial.println("Turn Right around Green");
-      } else if (RightSensor >= Right_Limit) {
+        Right();
+        // delay(100);
+        Serial.println("Turn Right around Red");
+      }
+      // if (currentColorID == Green_Color_ID && USE_GREEN_BLOCK) {
+      //   // Green block detected, turn right around it
+      //   Stop();
+      //   delay(100);
+      //   Left();
+      //   Serial.println("Turn Right around Green");
+      // }
+
+      else if (RightSensor >= Right_Limit) {
         // No obstacles or specific color detected, turn right
         Right();
         Serial.println("Turn Right");
